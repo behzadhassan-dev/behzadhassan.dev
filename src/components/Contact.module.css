@@ -141,6 +141,10 @@
 
 @media (max-width: 640px) {
   .form {
-    padding: 24px;
+    padding: 24px 16px;
+  }
+  
+  .socialLinks {
+    gap: 16px;
   }
 }
