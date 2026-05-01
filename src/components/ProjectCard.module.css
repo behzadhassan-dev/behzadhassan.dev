@@ -1,0 +1,91 @@
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 32px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+}
+
+.featured {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 30px -10px var(--accent-glow);
+}
+
+.featuredBadge {
+  position: absolute;
+  top: 12px;
+  right: -30px;
+  background: var(--accent-primary);
+  color: #000;
+  font-size: 0.7rem;
+  font-weight: 800;
+  padding: 4px 40px;
+  transform: rotate(45deg);
+  z-index: 10;
+}
+
+.card:hover {
+  transform: translateY(-10px) scale(1.02);
+  border-color: var(--accent-secondary);
+  box-shadow: 0 20px 40px -20px rgba(0, 207, 255, 0.3);
+}
+
+.category {
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  color: var(--accent-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.title {
+  font-size: 1.5rem;
+  margin-bottom: 16px;
+  color: var(--foreground);
+}
+
+.description {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 24px;
+  flex-grow: 1;
+}
+
+.techStack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.tech {
+  font-size: 0.75rem;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 4px 10px;
+  border-radius: 4px;
+  color: var(--text-muted);
+}
+
+.links {
+  margin-top: auto;
+}
+
+.githubLink {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--accent-primary);
+  transition: opacity 0.2s;
+}
+
+.githubLink:hover {
+  opacity: 0.8;
+  text-decoration: underline;
+}
