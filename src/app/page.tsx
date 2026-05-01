@@ -1,6 +1,7 @@
 import styles from "./page.module.css";
 import Hero from "@/components/Hero";
 import Skills from "@/components/Skills";
+import Projects from "@/components/Projects";
 
 export default function Home() {
   return (
@@ -8,6 +9,7 @@ export default function Home() {
       <main className={styles.main}>
         <Hero />
         <Skills />
+        <Projects />
         
         {/* About Section (Placeholder for now) */}
         <section id="about" className={styles.section}>
