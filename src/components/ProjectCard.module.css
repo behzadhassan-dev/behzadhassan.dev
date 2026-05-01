@@ -1,61 +1,75 @@
 .card {
   background: var(--card-bg);
   border: 1px solid var(--glass-border);
-  border-radius: 16px;
-  padding: 32px;
+  border-radius: 20px;
+  height: 100%;
+  position: relative;
+  overflow: visible;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  perspective: 1000px;
+  transition: border-color 0.3s;
+}
+
+.contentWrapper {
+  padding: 36px 28px;
   height: 100%;
   display: flex;
   flex-direction: column;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  position: relative;
-  overflow: hidden;
+}
+
+.glowOverlay {
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.04) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
 }
 
 .featured {
-  border-color: var(--accent-primary);
-  box-shadow: 0 0 30px -10px var(--accent-glow);
+  border-color: rgba(52, 211, 153, 0.25);
+  background: linear-gradient(135deg, rgba(52, 211, 153, 0.04), rgba(34, 211, 238, 0.02));
 }
 
 .featuredBadge {
   position: absolute;
-  top: 12px;
-  right: -30px;
-  background: var(--accent-primary);
-  color: #000;
+  top: -10px;
+  right: 20px;
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  color: #0a0a0f;
   font-size: 0.7rem;
   font-weight: 800;
-  padding: 4px 40px;
-  transform: rotate(45deg);
+  padding: 5px 14px;
+  border-radius: 8px;
+  box-shadow: 0 6px 15px rgba(52, 211, 153, 0.3);
   z-index: 10;
-}
-
-.card:hover {
-  transform: translateY(-10px) scale(1.02);
-  border-color: var(--accent-secondary);
-  box-shadow: 0 20px 40px -20px rgba(0, 207, 255, 0.3);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .category {
-  font-size: 0.75rem;
+  font-size: 0.78rem;
   font-family: var(--font-mono);
   color: var(--accent-secondary);
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
   display: block;
 }
 
 .title {
-  font-size: 1.5rem;
-  margin-bottom: 16px;
-  color: var(--foreground);
+  font-size: 1.6rem;
+  margin-bottom: 14px;
+  color: #fff;
+  font-weight: 700;
 }
 
 .description {
   font-size: 0.95rem;
   color: var(--text-muted);
-  line-height: 1.6;
-  margin-bottom: 24px;
+  line-height: 1.7;
+  margin-bottom: 28px;
   flex-grow: 1;
 }
 
@@ -67,11 +81,13 @@
 }
 
 .tech {
-  font-size: 0.75rem;
+  font-size: 0.78rem;
   background: rgba(255, 255, 255, 0.05);
-  padding: 4px 10px;
-  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 5px 12px;
+  border-radius: 6px;
   color: var(--text-muted);
+  font-weight: 500;
 }
 
 .links {
@@ -79,13 +95,16 @@
 }
 
 .githubLink {
-  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.95rem;
   font-weight: 600;
   color: var(--accent-primary);
-  transition: opacity 0.2s;
+  transition: all 0.3s;
+  gap: 6px;
 }
 
 .githubLink:hover {
-  opacity: 0.8;
-  text-decoration: underline;
+  color: var(--accent-secondary);
+  transform: translateX(4px);
 }

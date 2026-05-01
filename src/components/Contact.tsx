@@ -1,9 +1,18 @@
+"use client";
+
+import { motion } from 'framer-motion';
 import styles from './Contact.module.css';
 
 export default function Contact() {
   return (
     <section id="contact" className={styles.section}>
-      <div className={styles.container}>
+      <motion.div 
+        className={styles.container}
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+      >
         <div className={styles.header}>
           <h2 className={styles.title}>Get In <span className={styles.accent}>Touch</span></h2>
           <p className={styles.subtitle}>Have a project in mind or just want to say hi? My terminal is always open.</p>
@@ -45,7 +54,7 @@ export default function Contact() {
           <a href="https://www.kaggle.com/behzadhassan" target="_blank" rel="noopener noreferrer" className={styles.socialLink}>Kaggle</a>
           <a href="mailto:behzad@behzadhassan.dev" className={styles.socialLink}>Email</a>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }

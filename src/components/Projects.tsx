@@ -1,3 +1,6 @@
+"use client";
+
+import { motion, Variants } from 'framer-motion';
 import styles from './Projects.module.css';
 import ProjectCard from './ProjectCard';
 
@@ -6,9 +9,17 @@ const projects = [
     title: "VLM Benchmarking",
     description: "Benchmarking 5 open-source Vision Language Models on Pakistani medical imaging data (Chest X-ray, CT scan, Brain MRI). Featuring a live Next.js dashboard.",
     techStack: ["Python", "PyTorch", "VLMs", "React", "Next.js"],
-    github: "https://github.com/BehzadHassan",
+    github: "https://medical-vlm-evaluation.vercel.app/",
     isFeatured: true,
     category: "AI Research"
+  },
+  {
+    title: "ROZA Luxury Store",
+    description: "A premium, high-end e-commerce frontend featuring fluid swipe navigation, dynamic hover-zoom product inspection, and a sophisticated minimalist design system.",
+    techStack: ["Next.js", "React", "CSS Modules", "UI/UX Design"],
+    github: "https://roza-store.vercel.app", // The user provided this link
+    isFeatured: true,
+    category: "Full-Stack Design"
   },
   {
     title: "SympScan",
@@ -25,11 +36,11 @@ const projects = [
     category: "Computer Vision"
   },
   {
-    title: "Budget Tracker",
-    description: "Full-stack MERN application for personal finance with JWT authentication, transaction management, and secure password reset.",
-    techStack: ["MongoDB", "Express", "React", "Node.js"],
-    github: "https://github.com/BehzadHassan/Budget-Tracker",
-    category: "Full-Stack"
+    title: "3D Pose & Hand Detector",
+    description: "A lightweight, production-ready module that reconstructs and tracks 3D human pose and hand landmarks in real-time.",
+    techStack: ["Python", "OpenCV", "MediaPipe"],
+    github: "https://github.com/BehzadHassan/3D-Pose-Detector",
+    category: "Computer Vision"
   },
   {
     title: "Face-Match",
@@ -37,28 +48,50 @@ const projects = [
     techStack: ["Python", "FaceNet", "Flask", "Deep Learning"],
     github: "https://github.com/BehzadHassan/Face-Match",
     category: "Deep Learning"
-  },
-  {
-    title: "3D Body Tracking GUI",
-    description: "Desktop application for real-time human body pose detection driving a 3D model via live landmark data.",
-    techStack: ["Python", "MediaPipe", "CustomTkinter", "3D"],
-    github: "https://github.com/BehzadHassan",
-    category: "Computer Vision"
   }
 ];
+
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2
+    }
+  }
+};
+
+const itemVariants: Variants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } }
+};
 
 export default function Projects() {
   return (
     <section id="projects" className={styles.section}>
-      <div className={styles.header}>
+      <motion.div 
+        className={styles.header}
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.6 }}
+      >
         <h2 className={styles.title}>Selected <span className={styles.accent}>Projects</span></h2>
         <p className={styles.subtitle}>A collection of my work in AI, Computer Vision, and Web Development.</p>
-      </div>
-      <div className={styles.grid}>
+      </motion.div>
+      <motion.div 
+        className={styles.grid}
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+      >
         {projects.map((project, idx) => (
-          <ProjectCard key={idx} {...project} />
+          <motion.div key={idx} variants={itemVariants}>
+            <ProjectCard {...project} />
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     </section>
   );
 }

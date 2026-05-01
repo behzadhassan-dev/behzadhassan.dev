@@ -14,6 +14,9 @@ const geistMono = Geist_Mono({
 
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import AnimatedBackground from "@/components/AnimatedBackground";
+import ScrollToTop from "@/components/ScrollToTop";
+
 
 export const metadata: Metadata = {
   title: "Behzad Hassan | AI & Computer Vision Developer",
@@ -28,8 +31,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body>
+
+        <AnimatedBackground />
         <Navbar />
         {children}
+        <ScrollToTop />
         <Footer />
       </body>
     </html>

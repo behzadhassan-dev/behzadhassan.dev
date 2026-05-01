@@ -12,19 +12,19 @@ export default function Home() {
         <Skills />
         <Projects />
         <Contact />
-        
+
         {/* About Section (Placeholder for now) */}
         <section id="about" className={styles.section}>
           <div className={styles.aboutGrid}>
             <div className={styles.aboutText}>
               <h2 className={styles.sectionTitle}>About <span className={styles.accent}>Me</span></h2>
               <p>
-                Final-year Computer Science student at Sukkur IBA University with hands-on experience in 
-                Python, machine learning, computer vision, and full-stack web development. 
+                Final-year Computer Science student at Sukkur IBA University with hands-on experience in
+                Python, machine learning, computer vision, and full-stack web development.
                 Passionate about solving real-world problems through intelligent software.
               </p>
               <p>
-                Currently conducting final-year research on benchmarking Vision Language Models (VLMs) 
+                Currently conducting final-year research on benchmarking Vision Language Models (VLMs)
                 on Pakistani medical imaging data, focusing on chest X-rays, CT scans, and brain MRIs.
               </p>
             </div>
@@ -37,7 +37,7 @@ export default function Home() {
               </div>
               <div className={styles.terminalBody}>
                 <p><span className={styles.label}>OS:</span> Sukkur IBA University v2026</p>
-                <p><span className={styles.label}>Location:</span> Daharki, Pakistan</p>
+                <p><span className={styles.label}>Location:</span> Sukkur, Pakistan</p>
                 <p><span className={styles.label}>Status:</span> Open to Work</p>
                 <p><span className={styles.label}>Email:</span> behzadhassan967@gmail.com</p>
               </div>
