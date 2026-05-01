@@ -161,6 +161,56 @@
   transform: translateY(-2px);
 }
 
+.submitBtn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.successMessage {
+  padding: 60px 40px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.successIcon {
+  width: 64px;
+  height: 64px;
+  background: rgba(52, 211, 153, 0.1);
+  border: 1px solid var(--accent-primary);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--accent-primary);
+  margin-bottom: 10px;
+}
+
+.successTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.successText {
+  color: var(--text-muted);
+  font-size: 1rem;
+}
+
+.resetBtn {
+  margin-top: 10px;
+  color: var(--accent-primary);
+  background: transparent;
+  border: none;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
 @media (max-width: 640px) {
   .form {
     padding: 24px 20px;
