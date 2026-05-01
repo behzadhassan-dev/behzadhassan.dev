@@ -13,6 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "Behzad Hassan | AI & Computer Vision Developer",
@@ -29,6 +30,7 @@ export default function RootLayout({
       <body>
         <Navbar />
         {children}
+        <Footer />
       </body>
     </html>
   );
