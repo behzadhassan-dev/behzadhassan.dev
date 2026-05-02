@@ -22,6 +22,9 @@ import Preloader from "@/components/Preloader";
 export const metadata: Metadata = {
   title: "Behzad Hassan | AI & Computer Vision Developer",
   description: "Python Developer, AI/ML Engineer, and Computer Vision Specialist portfolio.",
+  icons: {
+    icon: "/icon.png",
+  },
 };
 
 export default function RootLayout({
