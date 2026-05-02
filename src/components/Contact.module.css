@@ -148,10 +148,13 @@
   font-size: 0.9rem;
   transition: all 0.3s;
   font-family: var(--font-mono);
-  padding: 10px 20px;
+  padding: 10px 24px;
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 10px;
+  border-radius: 12px;
   background: rgba(255, 255, 255, 0.03);
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .socialLink:hover {
