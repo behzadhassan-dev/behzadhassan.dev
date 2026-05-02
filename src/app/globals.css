@@ -14,7 +14,7 @@
   --text-muted: #94a3b8;
   --font-mono: 'Fira Code', 'Courier New', monospace;
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --section-gap: 160px;
+  --section-gap: 80px;
 }
 
 * {

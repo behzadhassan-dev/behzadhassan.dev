@@ -22,6 +22,13 @@ const projects = [
     category: "Full-Stack Design"
   },
   {
+    title: "SegFormer.AI",
+    description: "A premium, production-grade web application for real-time semantic segmentation of urban road scenes using the state-of-the-art SegFormer-B5 Transformer architecture.",
+    techStack: ["Transformer", "FastAPI", "Computer Vision", "SegFormer", "Cityscapes"],
+    github: "https://segformerai.vercel.app",
+    category: "AI / Computer Vision"
+  },
+  {
     title: "SympScan",
     description: "AI Disease Prediction system using Random Forest Classifier trained on 96,000+ records. Delivers personalized treatment and workout plans.",
     techStack: ["Flask", "React", "scikit-learn", "Pandas"],
@@ -48,6 +55,13 @@ const projects = [
     techStack: ["Python", "FaceNet", "Flask", "Deep Learning"],
     github: "https://github.com/BehzadHassan/Face-Match",
     category: "Deep Learning"
+  },
+  {
+    title: "Face Mesh Detector",
+    description: "A high-performance facial landmark system that reconstructs a 468-point 3D mesh in real-time. Leverages MediaPipe for precision face tracking, AR applications, and detailed 3D facial analysis.",
+    techStack: ["Python", "OpenCV", "MediaPipe", "Real-time", "AI"],
+    github: "https://github.com/BehzadHassan/face-mesh-detector",
+    category: "Computer Vision"
   }
 ];
 

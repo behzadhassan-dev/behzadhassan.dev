@@ -9,6 +9,7 @@
   -webkit-backdrop-filter: blur(20px);
   perspective: 1000px;
   transition: border-color 0.3s;
+  cursor: pointer;
 }
 
 .contentWrapper {

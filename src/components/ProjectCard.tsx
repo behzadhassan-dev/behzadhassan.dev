@@ -19,8 +19,8 @@ export default function ProjectCard({ title, description, techStack, github, isF
   const mouseXSpring = useSpring(x);
   const mouseYSpring = useSpring(y);
 
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["10deg", "-10deg"]);
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-10deg", "10deg"]);
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["7deg", "-7deg"]);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-7deg", "7deg"]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -44,14 +44,15 @@ export default function ProjectCard({ title, description, techStack, github, isF
       className={`${styles.card} ${isFeatured ? styles.featured : ''}`}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
+      onClick={() => window.open(github, '_blank')}
       style={{
         rotateX,
         rotateY,
         transformStyle: "preserve-3d",
       }}
-      whileHover={{ scale: 1.02 }}
+      whileHover={{ scale: 1.01 }}
     >
-      <div style={{ transform: "translateZ(50px)", transformStyle: "preserve-3d" }} className={styles.contentWrapper}>
+      <div style={{ transform: "translateZ(30px)", transformStyle: "preserve-3d" }} className={styles.contentWrapper}>
         {isFeatured && <span className={styles.featuredBadge}>FEATURED</span>}
         <div className={styles.content}>
           <span className={styles.category}>{category}</span>
@@ -63,9 +64,9 @@ export default function ProjectCard({ title, description, techStack, github, isF
             ))}
           </div>
           <div className={styles.links}>
-            <a href={github} target="_blank" rel="noopener noreferrer" className={styles.githubLink}>
+            <span className={styles.githubLink}>
               View Project →
-            </a>
+            </span>
           </div>
         </div>
       </div>
