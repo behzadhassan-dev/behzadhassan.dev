@@ -9,45 +9,54 @@ function MatrixRain({ width, height }: { width: number; height: number }) {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d", { alpha: false }); // Optimization: disable alpha for main ctx
     if (!ctx) return;
 
     canvas.width = width;
     canvas.height = height;
 
-    const columns = Math.floor(width / 20);
+    const fontSize = 16;
+    const columns = Math.floor(width / fontSize);
     const drops: number[] = Array(columns).fill(1);
-    const chars = "01アイウエオカキクケコサシスセソタチツテト∞≠≈∫∂∇";
+    const chars = "0101010101"; // Simplified characters for faster rendering
+    
+    let animationFrameId: number;
+    let lastTime = 0;
+    const fps = 15; // Lower FPS for background
+    const interval = 1000 / fps;
 
-    const draw = () => {
-      ctx.fillStyle = "rgba(10, 10, 15, 0.06)";
+    const draw = (time: number) => {
+      animationFrameId = requestAnimationFrame(draw);
+      
+      const delta = time - lastTime;
+      if (delta < interval) return;
+      lastTime = time - (delta % interval);
+
+      // Draw semi-transparent background to create trail
+      ctx.fillStyle = "#0a0a0f";
+      ctx.globalAlpha = 0.1;
       ctx.fillRect(0, 0, width, height);
+      ctx.globalAlpha = 1.0;
 
-      ctx.font = "14px monospace";
+      ctx.font = `${fontSize}px monospace`;
 
       for (let i = 0; i < drops.length; i++) {
-        const charIndex = Math.floor(Math.random() * chars.length);
-        const char = chars[charIndex];
+        const char = chars[Math.floor(Math.random() * chars.length)];
         
-        // Alternate colors: emerald, cyan, purple
-        const colors = [
-          "rgba(52, 211, 153, 0.25)",
-          "rgba(34, 211, 238, 0.2)",
-          "rgba(167, 139, 250, 0.2)",
-        ];
-        ctx.fillStyle = colors[i % 3];
+        // Single color for faster fill
+        ctx.fillStyle = i % 2 === 0 ? "rgba(52, 211, 153, 0.15)" : "rgba(34, 211, 238, 0.12)";
         
-        ctx.fillText(char, i * 20, drops[i] * 20);
+        ctx.fillText(char, i * fontSize, drops[i] * fontSize);
 
-        if (drops[i] * 20 > height && Math.random() > 0.98) {
+        if (drops[i] * fontSize > height && Math.random() > 0.975) {
           drops[i] = 0;
         }
         drops[i]++;
       }
     };
 
-    const interval = setInterval(draw, 80);
-    return () => clearInterval(interval);
+    animationFrameId = requestAnimationFrame(draw);
+    return () => cancelAnimationFrame(animationFrameId);
   }, [width, height]);
 
   return (
@@ -56,7 +65,7 @@ function MatrixRain({ width, height }: { width: number; height: number }) {
       style={{
         position: "absolute",
         inset: 0,
-        opacity: 0.4,
+        opacity: 0.3,
         pointerEvents: "none",
       }}
     />
@@ -71,11 +80,19 @@ export default function AnimatedBackground() {
     setMounted(true);
     setDimensions({ w: window.innerWidth, h: window.innerHeight });
 
+    let timeoutId: NodeJS.Timeout;
     const handleResize = () => {
-      setDimensions({ w: window.innerWidth, h: window.innerHeight });
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        setDimensions({ w: window.innerWidth, h: window.innerHeight });
+      }, 200);
     };
+    
     window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      clearTimeout(timeoutId);
+    };
   }, []);
 
   if (!mounted) return null;
@@ -87,83 +104,46 @@ export default function AnimatedBackground() {
         inset: 0,
         zIndex: -1,
         overflow: "hidden",
-        background:
-          "linear-gradient(135deg, #0a0a0f 0%, #0f0a1a 30%, #0a0f1a 60%, #0a0a0f 100%)",
+        backgroundColor: "#0a0a0f",
       }}
     >
-      {/* Matrix-style code rain */}
       <MatrixRain width={dimensions.w} height={dimensions.h} />
 
-      {/* Moving gradient orbs */}
-      <motion.div
+      {/* Static Glows (Better for mobile performance than animated ones) */}
+      <div
         style={{
           position: "absolute",
-          top: "-20%",
-          left: "-20%",
-          width: "60vw",
-          height: "60vw",
+          top: "-10%",
+          left: "-10%",
+          width: "50vw",
+          height: "50vw",
           borderRadius: "50%",
-          background:
-            "radial-gradient(circle, rgba(52,211,153,0.12) 0%, transparent 60%)",
-          filter: "blur(80px)",
+          background: "radial-gradient(circle, rgba(52,211,153,0.08) 0%, transparent 70%)",
+          filter: "blur(60px)",
+          pointerEvents: "none",
         }}
-        animate={{
-          x: ["0%", "10%", "-5%", "0%"],
-          y: ["0%", "-10%", "5%", "0%"],
-          scale: [1, 1.1, 0.95, 1],
-        }}
-        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
       />
-      <motion.div
+      <div
         style={{
           position: "absolute",
-          bottom: "-20%",
-          right: "-15%",
-          width: "55vw",
-          height: "55vw",
+          bottom: "-10%",
+          right: "-10%",
+          width: "40vw",
+          height: "40vw",
           borderRadius: "50%",
-          background:
-            "radial-gradient(circle, rgba(34,211,238,0.1) 0%, transparent 60%)",
-          filter: "blur(80px)",
+          background: "radial-gradient(circle, rgba(34,211,238,0.06) 0%, transparent 70%)",
+          filter: "blur(60px)",
+          pointerEvents: "none",
         }}
-        animate={{
-          x: ["0%", "-12%", "8%", "0%"],
-          y: ["0%", "8%", "-5%", "0%"],
-          scale: [1, 1.15, 0.9, 1],
-        }}
-        transition={{ duration: 28, repeat: Infinity, ease: "linear" }}
-      />
-      <motion.div
-        style={{
-          position: "absolute",
-          top: "40%",
-          right: "5%",
-          width: "35vw",
-          height: "35vw",
-          borderRadius: "50%",
-          background:
-            "radial-gradient(circle, rgba(167,139,250,0.08) 0%, transparent 60%)",
-          filter: "blur(80px)",
-        }}
-        animate={{
-          x: ["0%", "-8%", "10%", "0%"],
-          y: ["0%", "12%", "-8%", "0%"],
-          scale: [1, 0.9, 1.1, 1],
-        }}
-        transition={{ duration: 35, repeat: Infinity, ease: "linear" }}
       />
 
-      {/* Dot grid overlay */}
       <div
         style={{
           position: "absolute",
           inset: 0,
-          opacity: 0.06,
-          backgroundImage:
-            "radial-gradient(circle, rgba(255,255,255,0.8) 1px, transparent 1px)",
+          opacity: 0.03,
+          backgroundImage: "radial-gradient(circle, #fff 1px, transparent 1px)",
           backgroundSize: "40px 40px",
-          maskImage:
-            "radial-gradient(ellipse at 50% 50%, black 30%, transparent 70%)",
         }}
       />
     </div>

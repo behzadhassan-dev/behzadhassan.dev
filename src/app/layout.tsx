@@ -16,6 +16,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AnimatedBackground from "@/components/AnimatedBackground";
 import ScrollToTop from "@/components/ScrollToTop";
+import Preloader from "@/components/Preloader";
 
 
 export const metadata: Metadata = {
@@ -29,9 +30,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`} style={{ scrollBehavior: 'smooth' }}>
+      <head>
+        <script dangerouslySetInnerHTML={{
+          __html: `
+            if ('scrollRestoration' in history) {
+              history.scrollRestoration = 'manual';
+            }
+          `
+        }} />
+      </head>
       <body>
-
+        <Preloader />
         <AnimatedBackground />
         <Navbar />
         {children}

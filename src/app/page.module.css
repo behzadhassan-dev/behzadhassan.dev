@@ -46,6 +46,7 @@
   overflow: hidden;
   font-family: var(--font-mono);
   box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+  width: 100%;
 }
 
 .terminalHeader {
@@ -75,6 +76,7 @@
 
 .terminalBody {
   padding: 24px;
+  overflow-x: auto;
 }
 
 .terminalBody p {

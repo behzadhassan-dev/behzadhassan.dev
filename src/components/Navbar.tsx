@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion, useScroll, useSpring } from 'framer-motion';
 import styles from './Navbar.module.css';
@@ -8,11 +8,35 @@ import styles from './Navbar.module.css';
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const { scrollYProgress } = useScroll();
+
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+  }, [isOpen]);
+
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
     damping: 30,
     restDelta: 0.001
   });
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (href.startsWith('#')) {
+      e.preventDefault();
+      const id = href.replace('#', '');
+      const element = document.getElementById(id);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+        // Update URL hash without jumping
+        window.history.pushState(null, '', href);
+      }
+      setIsOpen(false);
+    }
+  };
 
   return (
     <>
@@ -30,10 +54,10 @@ export default function Navbar() {
           </Link>
           
           <div className={`${styles.links} ${isOpen ? styles.linksOpen : ''}`}>
-            <Link href="#about" className={styles.link} onClick={() => setIsOpen(false)}>About</Link>
-            <Link href="#skills" className={styles.link} onClick={() => setIsOpen(false)}>Skills</Link>
-            <Link href="#projects" className={styles.link} onClick={() => setIsOpen(false)}>Projects</Link>
-            <Link href="#contact" className={styles.link} onClick={() => setIsOpen(false)}>Contact</Link>
+            <Link href="#about" className={styles.link} onClick={(e) => handleNavClick(e, '#about')}>About</Link>
+            <Link href="#skills" className={styles.link} onClick={(e) => handleNavClick(e, '#skills')}>Skills</Link>
+            <Link href="#projects" className={styles.link} onClick={(e) => handleNavClick(e, '#projects')}>Projects</Link>
+            <Link href="#contact" className={styles.link} onClick={(e) => handleNavClick(e, '#contact')}>Contact</Link>
           </div>
 
           <button className={styles.menuBtn} onClick={() => setIsOpen(!isOpen)} aria-label="Toggle Menu">

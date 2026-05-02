@@ -1,3 +1,6 @@
+"use client";
+
+import { motion } from "framer-motion";
 import styles from "./page.module.css";
 import Hero from "@/components/Hero";
 import Skills from "@/components/Skills";
@@ -9,13 +12,16 @@ export default function Home() {
     <div className={styles.page}>
       <main className={styles.main}>
         <Hero />
-        <Skills />
-        <Projects />
-        <Contact />
-
-        {/* About Section (Placeholder for now) */}
+        
+        {/* About Section */}
         <section id="about" className={styles.section}>
-          <div className={styles.aboutGrid}>
+          <motion.div 
+            className={styles.aboutGrid}
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          >
             <div className={styles.aboutText}>
               <h2 className={styles.sectionTitle}>About <span className={styles.accent}>Me</span></h2>
               <p>
@@ -42,8 +48,12 @@ export default function Home() {
                 <p><span className={styles.label}>Email:</span> behzadhassan967@gmail.com</p>
               </div>
             </div>
-          </div>
+          </motion.div>
         </section>
+
+        <Skills />
+        <Projects />
+        <Contact />
       </main>
     </div>
   );
