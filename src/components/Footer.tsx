@@ -1,84 +1,164 @@
 "use client";
 
-import { motion } from 'framer-motion';
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { useRef, useState, useEffect } from 'react';
 import styles from './Footer.module.css';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  const footerRef = useRef<HTMLElement>(null);
   
+  const [time, setTime] = useState<string>("");
+  
+  useEffect(() => {
+    setTime(new Date().toLocaleTimeString() + " UTC");
+    const timer = setInterval(() => {
+      setTime(new Date().toLocaleTimeString() + " UTC");
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const mxSpring = useSpring(mx, { stiffness: 100, damping: 20 });
+  const mySpring = useSpring(my, { stiffness: 100, damping: 20 });
+  
+  const rotateX = useTransform(mySpring, [-0.5, 0.5], ["5deg", "-5deg"]);
+  const rotateY = useTransform(mxSpring, [-0.5, 0.5], ["-5deg", "5deg"]);
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!footerRef.current) return;
+    const rect = footerRef.current.getBoundingClientRect();
+    mx.set((e.clientX - rect.left) / rect.width - 0.5);
+    my.set((e.clientY - rect.top) / rect.height - 0.5);
+  };
+
+  const handleMouseLeave = () => {
+    mx.set(0);
+    my.set(0);
+  };
+
   return (
-    <footer className={styles.footer}>
-      {/* Top gradient line */}
-      <div className={styles.gradientLine}></div>
-      
-      <div className={styles.container}>
-        {/* Main footer content */}
-        <div className={styles.top}>
-          {/* Brand Column */}
-          <div className={styles.brand}>
-            <div className={styles.logoWrap}>
-              <span className={styles.logoText}>Behzad</span>
-              <span className={styles.logoDot}>.</span>
+    <footer 
+      className={styles.footer} 
+      ref={footerRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+    >
+      <div className={styles.perspectiveContainer}>
+        <motion.div 
+          className={styles.content}
+          style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
+        >
+          {/* Top Metadata Bar */}
+          <div className={styles.metaHeader}>
+            <div className={styles.metaLeft}>
+              <span className={styles.sysTag}>[SYSTEM_V01]</span>
+              <span className={styles.sysStatus}>
+                <span className={styles.pulseDot} />
+                CORE_OPERATIONAL
+              </span>
             </div>
-            <p className={styles.tagline}>
-              Building intelligent systems at the intersection of AI, Computer Vision, and Web Development.
-            </p>
-            {/* Status indicator */}
-            <div className={styles.statusWrap}>
-              <span className={styles.statusDot}></span>
-              <span className={styles.statusText}>Available for work</span>
+            <div className={styles.metaRight}>
+              <span className={styles.timestamp}>{time || "--:--:-- UTC"}</span>
             </div>
-          </div>
-          
-          {/* Quick Links */}
-          <div className={styles.linksGroup}>
-            <h4 className={styles.groupTitle}>Navigate</h4>
-            <a href="#about" className={styles.link}>About</a>
-            <a href="#skills" className={styles.link}>Skills</a>
-            <a href="#projects" className={styles.link}>Projects</a>
-            <a href="#contact" className={styles.link}>Contact</a>
-          </div>
-          
-          {/* Social Links */}
-          <div className={styles.linksGroup}>
-            <h4 className={styles.groupTitle}>Connect</h4>
-            <a href="https://github.com/BehzadHassan" target="_blank" rel="noopener noreferrer" className={styles.link}>
-              <span className={styles.linkIcon}>→</span> GitHub
-            </a>
-            <a href="https://www.linkedin.com/in/behzad-hassan-bx28" target="_blank" rel="noopener noreferrer" className={styles.link}>
-              <span className={styles.linkIcon}>→</span> LinkedIn
-            </a>
-            <a href="https://www.kaggle.com/behzadhassan" target="_blank" rel="noopener noreferrer" className={styles.link}>
-              <span className={styles.linkIcon}>→</span> Kaggle
-            </a>
-            <a href="https://www.credly.com/users/behzad-hassan" target="_blank" rel="noopener noreferrer" className={styles.link}>
-              <span className={styles.linkIcon}>→</span> Credly
-            </a>
           </div>
 
-          {/* Tech Stack */}
-          <div className={styles.linksGroup}>
-            <h4 className={styles.groupTitle}>Built With</h4>
-            <div className={styles.techPills}>
-              <span className={styles.techPill}>Next.js</span>
-              <span className={styles.techPill}>React</span>
-              <span className={styles.techPill}>TypeScript</span>
-              <span className={styles.techPill}>Framer Motion</span>
+          <div className={styles.grid}>
+            {/* Brand/Identity */}
+            <div className={`${styles.gridCol} ${styles.brandCol}`}>
+              <div className={styles.logoWrap}>
+                <span className={styles.logoText}>BEHZAD</span>
+                <span className={styles.logoSuffix}>.HASSAN</span>
+              </div>
+              <p className={styles.description}>
+                Architecting high-performance AI workstations and computer vision pipelines for the next generation of intelligent systems.
+              </p>
+              <div className={styles.systemReadout}>
+                <div className={styles.statRow}>
+                  <span className={styles.statLabel}>UPTIME:</span>
+                  <span className={styles.statValue}>99.98%</span>
+                </div>
+                <div className={styles.statRow}>
+                  <span className={styles.statLabel}>LATENCY:</span>
+                  <span className={styles.statValue}>14ms</span>
+                </div>
+                <div className={styles.statRow}>
+                  <span className={styles.statLabel}>NODE:</span>
+                  <span className={styles.statValue}>PAK_CORE</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Navigation */}
+            <div className={`${styles.gridCol} ${styles.linksCol}`}>
+              <h4 className={styles.colTitle}>SYSTEM_INDEX</h4>
+              <nav className={styles.nav}>
+                {[
+                  { id: 'about', label: '01_ABOUT' },
+                  { id: 'projects', label: '02_PROJECTS' },
+                  { id: 'skills', label: '03_STACKS' },
+                  { id: 'contact', label: '04_CONNECT' },
+                ].map((item) => (
+                  <a key={item.id} href={`#${item.id}`} className={styles.navLink}>
+                    <motion.span
+                      whileTap={{ 
+                        x: [0, -3, 3, -2, 0], 
+                        color: ["#fff", "var(--accent-primary)", "#fff"]
+                      }}
+                      transition={{ duration: 0.2 }}
+                      className={styles.linkText}
+                    >
+                      {item.label}
+                    </motion.span>
+                  </a>
+                ))}
+              </nav>
+            </div>
+
+            {/* Social / External */}
+            <div className={`${styles.gridCol} ${styles.linksCol}`}>
+              <h4 className={styles.colTitle}>COMM_TERMINALS</h4>
+              <nav className={styles.nav}>
+                {[
+                  { href: 'https://github.com/BehzadHassan', label: 'GITHUB' },
+                  { href: 'https://www.linkedin.com/in/behzad-hassan-bx28', label: 'LINKEDIN' },
+                  { href: 'https://wa.me/923163607160', label: 'WHATSAPP' },
+                  { href: 'mailto:behzadhassan967@gmail.com', label: 'EMAIL' },
+                ].map((item) => (
+                  <a 
+                    key={item.label} 
+                    href={item.href} 
+                    target={item.href.startsWith('http') ? "_blank" : undefined}
+                    rel="noopener noreferrer" 
+                    className={styles.navLink}
+                  >
+                    <motion.span
+                      whileTap={{ 
+                        scale: 0.95, 
+                        x: [0, -4, 4, 0], 
+                        color: ["#fff", "var(--accent-secondary)", "#fff"]
+                      }}
+                      className={styles.linkText}
+                    >
+                      {item.label}
+                    </motion.span>
+                  </a>
+                ))}
+              </nav>
             </div>
           </div>
-        </div>
-        
-        {/* Bottom bar */}
-        <div className={styles.bottom}>
-          <p className={styles.copyright}>
-            <span className={styles.terminalPrefix}>$</span> &copy; {currentYear} <span className={styles.accent}>Behzad Hassan</span>. All rights reserved.
-          </p>
-          <div className={styles.bottomLinks}>
-            <a href="mailto:behzadhassan967@gmail.com" className={styles.bottomLink}>behzadhassan967@gmail.com</a>
-            <span className={styles.divider}>·</span>
-            <a href="https://behzadhassan.dev" className={styles.bottomLink}>behzadhassan.dev</a>
+
+          {/* Copyright/Final Info */}
+          <div className={styles.bottomBar}>
+            <div className={styles.copyright}>
+              &copy; {currentYear} ALL_RIGHTS_RESERVED // BH_STATION
+            </div>
+            <div className={styles.credits}>
+              DESIGNED_BY_BEHZAD // BUILT_WITH_NEXTJS
+            </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </footer>
   );

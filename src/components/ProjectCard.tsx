@@ -135,8 +135,34 @@ export default function InferenceCard({ project, phase, isActive }: {
           </div>
         </div>
         <div className={styles.actionFooter}>
-          <a href={liveUrl || github} target="_blank" rel="noopener noreferrer" className={styles.btnPrimary} onClick={e => e.stopPropagation()}>→ Live Demo</a>
-          <a href={github} target="_blank" rel="noopener noreferrer" className={styles.btnSecondary} onClick={e => e.stopPropagation()}>{"{ }"} Code</a>
+          {liveUrl && (
+            <button 
+              className={styles.btnPrimary} 
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                window.open(liveUrl, '_blank', 'noopener,noreferrer');
+              }}
+              onPointerDown={e => e.stopPropagation()}
+              onMouseDown={e => e.stopPropagation()}
+            >
+              → Live Demo
+            </button>
+          )}
+          {github && (
+            <button 
+              className={styles.btnSecondary} 
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                window.open(github, '_blank', 'noopener,noreferrer');
+              }}
+              onPointerDown={e => e.stopPropagation()}
+              onMouseDown={e => e.stopPropagation()}
+            >
+              {"{ }"} Code
+            </button>
+          )}
         </div>
         <span className={styles.classifiedStamp}>CLASSIFIED ✓</span>
       </div>

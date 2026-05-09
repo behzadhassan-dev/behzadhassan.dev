@@ -129,8 +129,8 @@ function Hover3DTerminal() {
           <span className={styles.terminalTitle}>behzad@ai-core: ~</span>
         </div>
         <div className={styles.terminalBody}>
-          <p><span className={styles.label}>OS:</span> <span className={styles.value}><Typewriter text="Sukkur IBA University v2026" delay={200} start={isInView}/></span></p>
-          <p><span className={styles.label}>Location:</span> <span className={styles.value}><Typewriter text="Sukkur, Pakistan" delay={1400} start={isInView}/></span></p>
+          <p><span className={styles.label}>OS:</span> <span className={styles.value}><Typewriter text="AI-Workstation v2026" delay={200} start={isInView}/></span></p>
+          <p><span className={styles.label}>Location:</span> <span className={styles.value}><Typewriter text="Global / Remote" delay={1400} start={isInView}/></span></p>
           <p><span className={styles.label}>Role:</span> <span className={styles.value}><Typewriter text="AI/ML Engineer & Developer" delay={2200} start={isInView}/></span></p>
           <p>
             <span className={styles.label}>Status:</span> 

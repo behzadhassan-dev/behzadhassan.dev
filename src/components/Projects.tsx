@@ -24,7 +24,6 @@ const projects = [
     title: "ROZA Luxury Store",
     description: "Premium e-commerce frontend — fluid swipe navigation, hover-zoom inspection, minimalist design system.",
     techStack: ["Next.js", "React", "CSS Modules", "UI/UX"],
-    github: "https://github.com/BehzadHassan/roza-store",
     liveUrl: "https://roza-store.vercel.app",
     category: "Full-Stack Design",
     model: "Next.js 14 · SSR",
@@ -167,10 +166,10 @@ export default function Projects() {
       });
     };
 
-    const t0 = setTimeout(() => setPhase(1), 50);
-    const t1 = setTimeout(() => setPhase(2), 450);
-    const t2 = setTimeout(() => setPhase(3), 750);
-    const t3 = setTimeout(() => setPhase(4), 1050);
+    const t0 = setTimeout(() => setPhase(1), 0);
+    const t1 = setTimeout(() => setPhase(2), 150);
+    const t2 = setTimeout(() => setPhase(3), 350);
+    const t3 = setTimeout(() => setPhase(4), 550);
 
     return () => { clearTimeout(t0); clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
   }, [activeIndex]);
@@ -179,8 +178,18 @@ export default function Projects() {
     if (!containerRef.current) return;
     const sectionTop = containerRef.current.offsetTop;
     const sectionHeight = containerRef.current.scrollHeight - window.innerHeight;
-    const targetScroll = sectionTop + (idx / total) * sectionHeight;
-    window.scrollTo({ top: targetScroll, behavior: 'smooth' });
+    const targetScroll = sectionTop + (idx / (total - 1)) * sectionHeight;
+
+    // Use framer-motion's animate for a truly smooth scroll experience
+    import('framer-motion').then(({ animate }) => {
+      animate(window.scrollY, targetScroll, {
+        type: "spring",
+        stiffness: 180,
+        damping: 24,
+        mass: 0.6,
+        onUpdate: (latest) => window.scrollTo(0, latest)
+      });
+    });
   }, [total]);
 
   return (
@@ -216,19 +225,34 @@ export default function Projects() {
                   transform: `translateX(${t.x}) translateZ(${t.z}px) rotateY(${t.rotateY * angleScale}deg) scale(${t.scale})`,
                   opacity: t.opacity,
                   zIndex: total - Math.abs(offset),
-                  pointerEvents: offset === 0 ? 'auto' : Math.abs(offset) <= 1 ? 'auto' : 'none',
-                  cursor: offset !== 0 ? 'pointer' : 'default',
+                  pointerEvents: Math.abs(offset) <= 2 ? 'auto' : 'none',
+                  cursor: offset !== 0 ? 'pointer' : 'grab',
                 }}
-                onClick={() => { if (offset !== 0 && Math.abs(offset) <= 1) goTo(idx); }}
+                onClick={() => { if (offset !== 0) goTo(idx); }}
               >
-                <div className={`${styles.counter} ${offset === 0 ? styles.counterVisible : ''}`}>
-                  {counter}
-                </div>
-                <InferenceCard
-                  project={project as any}
-                  phase={phases[idx]}
-                  isActive={idx === activeIndex}
-                />
+                <motion.div
+                  drag={idx === activeIndex ? "x" : false}
+                  dragConstraints={{ left: 0, right: 0 }}
+                  dragElastic={0.2}
+                  onDragEnd={(_, info) => {
+                    const threshold = 50;
+                    const velocity = 500;
+                    if (Math.abs(info.offset.x) > threshold || Math.abs(info.velocity.x) > velocity) {
+                      if (info.offset.x > 0 && idx > 0) goTo(idx - 1);
+                      else if (info.offset.x < 0 && idx < total - 1) goTo(idx + 1);
+                    }
+                  }}
+                  style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+                >
+                  <div className={`${styles.counter} ${offset === 0 ? styles.counterVisible : ''}`}>
+                    {counter}
+                  </div>
+                  <InferenceCard
+                    project={project as any}
+                    phase={phases[idx]}
+                    isActive={idx === activeIndex}
+                  />
+                </motion.div>
               </div>
             );
           })}

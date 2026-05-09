@@ -18,6 +18,7 @@ import AnimatedBackground from "@/components/AnimatedBackground";
 import ScrollToTop from "@/components/ScrollToTop";
 import Preloader from "@/components/Preloader";
 
+import Script from "next/script";
 
 export const metadata: Metadata = {
   title: "Behzad Hassan | AI & Computer Vision Developer",
@@ -35,13 +36,13 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`} style={{ scrollBehavior: 'smooth' }}>
       <head>
-        <script dangerouslySetInnerHTML={{
-          __html: `
+        <Script id="scroll-restoration" strategy="beforeInteractive">
+          {`
             if ('scrollRestoration' in history) {
               history.scrollRestoration = 'manual';
             }
-          `
-        }} />
+          `}
+        </Script>
       </head>
       <body>
         <Preloader />
