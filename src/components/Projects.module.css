@@ -1,44 +1,105 @@
 .section {
-  width: 100%;
-  max-width: 1200px;
-  margin: var(--section-gap, 160px) auto;
-  padding: 0 24px;
-  position: relative;
-  z-index: 10;
+  position: relative; width: 100%; z-index: 10;
 }
 
 .header {
   text-align: center;
-  margin-bottom: 60px;
+  padding: 5vh 24px 20px; /* Reduced from 120px top padding */
+  position: relative; z-index: 20;
 }
-
 .title {
-  font-size: clamp(2.5rem, 5vw, 3.5rem);
-  margin-bottom: 16px;
-  font-weight: 900;
-  color: #fff;
+  font-size: clamp(2rem, 4vw, 3rem); /* Slightly smaller to save space */
+  font-weight: 900; color: #fff; margin-bottom: 8px;
 }
-
 .accent {
   background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
 }
-
 .subtitle {
-  color: var(--text-muted);
-  font-size: 1.1rem;
+  color: var(--text-muted); font-size: 1.1rem;
+  font-family: var(--font-mono); letter-spacing: 0.03em;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 360px), 1fr));
-  gap: 28px;
+/* ─── Sticky Carousel Viewport ─── */
+.stickyViewport {
+  position: sticky; top: 0; height: 100vh;
+  display: flex; flex-direction: column; align-items: center;
+  perspective: 1400px;
+  overflow: hidden;
+}
+
+.carouselContainer {
+  position: relative;
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ─── Card Wrapper (3D positioned) ─── */
+.cardWrapper {
+  position: absolute;
+  display: flex; flex-direction: column; align-items: center;
+  transition: transform 0.65s cubic-bezier(0.32, 0.72, 0, 1),
+              opacity 0.5s ease;
+  will-change: transform, opacity;
+}
+
+/* ─── Counter Badge ─── */
+.counter {
+  font-family: var(--font-mono); font-size: 0.85rem;
+  color: var(--accent-primary); letter-spacing: 0.15em;
+  margin-bottom: 18px;
+  background: rgba(10,10,15,0.9);
+  padding: 6px 18px; border-radius: 20px;
+  border: 1px solid rgba(52,211,153,0.25);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+  opacity: 0;
+  transition: opacity 0.4s 0.2s;
+}
+.counterVisible { opacity: 1; }
+
+/* ─── Navigation Dots ─── */
+.navDots {
+  position: absolute; right: 32px; top: 50%;
+  transform: translateY(-50%);
+  display: flex; flex-direction: column; gap: 10px;
+  z-index: 30;
+}
+.navDot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  border: none; cursor: pointer; padding: 0;
+  transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+.navDot:hover { background: rgba(255,255,255,0.3); }
+.navDotActive {
+  background: var(--accent-primary);
+  transform: scale(1.4);
+  box-shadow: 0 0 10px rgba(52,211,153,0.5);
 }
 
 @media (max-width: 768px) {
-  .grid {
-    grid-template-columns: 1fr;
+  .header {
+    padding: 80px 20px 20px; /* Offset for fixed navbar */
   }
+  .title {
+    font-size: 1.8rem;
+    margin-bottom: 6px;
+  }
+  .subtitle {
+    font-size: 0.9rem;
+  }
+  .navDots { 
+    right: 12px; 
+    gap: 8px; 
+    top: auto;
+    bottom: 20px;
+    flex-direction: row;
+    transform: translateX(-50%);
+    left: 50%;
+  }
+  .navDot { width: 6px; height: 6px; }
+  .stickyViewport { padding: 0 12px; }
 }

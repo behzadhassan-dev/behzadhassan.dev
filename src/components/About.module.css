@@ -1,0 +1,251 @@
+.section {
+  width: 100%;
+  max-width: 1200px;
+  margin: 140px auto;
+  padding: 0 24px;
+  position: relative;
+  z-index: 10;
+}
+
+/* Background Glowing Orbs for Depth */
+.bgOrb1, .bgOrb2 {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  z-index: -1;
+  opacity: 0.15;
+  pointer-events: none;
+}
+.bgOrb1 {
+  width: 500px;
+  height: 500px;
+  background: var(--accent-primary);
+  top: -100px;
+  left: -200px;
+}
+.bgOrb2 {
+  width: 400px;
+  height: 400px;
+  background: var(--accent-secondary);
+  bottom: -100px;
+  right: -100px;
+}
+
+.title {
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  margin-bottom: 60px;
+  font-weight: 900;
+  text-align: center;
+  color: #fff;
+}
+
+.accent {
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: center;
+  perspective: 1200px;
+}
+
+/* 3D Glass Cards for Text */
+.textColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  transform-style: preserve-3d;
+}
+
+.glassCard {
+  background: rgba(20, 20, 25, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 32px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  position: relative;
+  transition: all 0.4s ease;
+  transform-style: preserve-3d;
+}
+
+.glassCard:hover {
+  border-color: rgba(52, 211, 153, 0.5);
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5), 
+              0 0 30px rgba(52, 211, 153, 0.15) inset,
+              0 0 20px rgba(52, 211, 153, 0.2);
+  transform: translateY(-5px);
+}
+
+.spinningIcon {
+  display: inline-block;
+  margin-bottom: 16px;
+  animation: spin3D 5s linear infinite;
+  transform-style: preserve-3d;
+  color: var(--accent-primary);
+  width: 40px;
+  height: 40px;
+}
+
+@keyframes spin3D {
+  0% { transform: rotateY(0deg); }
+  100% { transform: rotateY(360deg); }
+}
+
+.cardText {
+  color: var(--text-muted);
+  line-height: 1.8;
+  font-size: 1.05rem;
+  transform: translateZ(20px);
+}
+
+.cardText strong {
+  color: #fff;
+  font-weight: 600;
+}
+
+/* 3D Terminal */
+.terminalWrapper {
+  transform-style: preserve-3d;
+  width: 100%;
+}
+
+.terminal {
+  background: rgba(10, 10, 15, 0.7);
+  border: 1px solid rgba(52, 211, 153, 0.2);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 
+    -20px 20px 60px rgba(0,0,0,0.6),
+    0 0 30px rgba(52, 211, 153, 0.1) inset;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transform-style: preserve-3d;
+  position: relative;
+}
+
+/* Add a cool grid reflection on the terminal glass */
+.terminal::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.terminalHeader {
+  background: rgba(0, 0, 0, 0.5);
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid rgba(52, 211, 153, 0.1);
+}
+
+.terminalTitle {
+  margin-left: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+}
+
+.terminalBody {
+  padding: 32px;
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  line-height: 2.2;
+}
+
+.terminalBody p {
+  margin-bottom: 12px;
+  transform: translateZ(30px);
+  min-height: 24px; /* prevent layout shift while typing */
+}
+
+.label {
+  color: var(--accent-primary);
+  margin-right: 12px;
+  font-weight: 600;
+}
+
+.value {
+  color: #e2e8f0;
+}
+
+.liveIndicator {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background-color: #27c93f;
+  border-radius: 50%;
+  margin-right: 8px;
+  box-shadow: 0 0 8px #27c93f;
+  animation: statusPulse 1.5s infinite ease-in-out;
+}
+
+@keyframes statusPulse {
+  0% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(1.2); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* Glowing code cursor */
+.cursor {
+  display: inline-block;
+  width: 10px;
+  height: 18px;
+  background: var(--accent-primary);
+  animation: blink 1s step-end infinite;
+  vertical-align: middle;
+  margin-left: 8px;
+  box-shadow: 0 0 10px var(--accent-primary);
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@media (max-width: 768px) {
+  .section {
+    margin: 80px auto;
+  }
+  .title {
+    font-size: 2.2rem;
+    margin-bottom: 40px;
+  }
+  .glassCard {
+    padding: 24px;
+  }
+  .terminalBody {
+    padding: 24px 20px;
+    font-size: 0.85rem;
+    line-height: 1.8;
+  }
+  .terminalBody p {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-bottom: 16px;
+  }
+  .label {
+    margin-right: 0;
+    font-size: 0.75rem;
+    opacity: 0.7;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}

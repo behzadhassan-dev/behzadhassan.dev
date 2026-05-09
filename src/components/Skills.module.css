@@ -1,16 +1,20 @@
 .section {
   width: 100%;
-  max-width: 1200px;
-  margin: var(--section-gap, 160px) auto;
-  padding: 0 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 120px 24px 80px;
   position: relative;
   z-index: 10;
 }
 
-.title {
-  font-size: clamp(2.5rem, 5vw, 3.5rem);
-  margin-bottom: 16px;
+.header {
   text-align: center;
+  margin-bottom: 80px;
+}
+
+.title {
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  margin-bottom: 14px;
   font-weight: 900;
   letter-spacing: -0.03em;
   color: #fff;
@@ -23,111 +27,208 @@
   background-clip: text;
 }
 
-.sectionSubtitle {
-  text-align: center;
+.subtitle {
   color: var(--text-muted);
-  font-size: 1.1rem;
-  margin-bottom: 60px;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
+  font-size: 1rem;
+  font-family: var(--font-mono);
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
-  gap: 24px;
+.allCategories {
+  display: flex;
+  flex-direction: column;
+  gap: 120px;
 }
 
-.card {
-  background: var(--card-bg);
-  border: 1px solid var(--glass-border);
-  padding: 40px 32px;
-  border-radius: 20px;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+.categorySection {
   position: relative;
-  overflow: hidden;
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
 }
 
-/* Top gradient line on each card */
-.card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary), var(--accent-tertiary));
-  opacity: 0.6;
-  transition: opacity 0.3s;
-}
-
-.glowOverlay {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(600px circle at 50% 0%, rgba(52, 211, 153, 0.06), transparent 60%);
-  z-index: 0;
+.categoryHeaderContainer {
+  position: sticky;
+  top: 120px;
+  z-index: 20;
+  display: flex;
+  justify-content: center;
   pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.4s;
 }
 
-.card:hover {
-  transform: translateY(-6px);
-  border-color: rgba(52, 211, 153, 0.2);
-  box-shadow: 0 20px 60px -15px rgba(0, 0, 0, 0.4),
-              0 0 40px rgba(52, 211, 153, 0.08);
+.categoryHeader {
+  background: var(--card-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  padding: 16px 32px;
+  border-radius: 50px;
+  border: 1px solid var(--glass-border);
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  pointer-events: auto;
 }
 
-.card:hover::before {
-  opacity: 1;
-}
-
-.card:hover .glowOverlay {
-  opacity: 1;
+.categoryIcon {
+  font-size: 1.5rem;
 }
 
 .categoryTitle {
-  font-size: 1.4rem;
-  margin-bottom: 28px;
   color: #fff;
-  font-family: var(--font-sans);
+  font-size: 1.2rem;
   font-weight: 700;
-  position: relative;
-  z-index: 1;
+  margin: 0;
 }
 
-.skillList {
+.skillsTimeline {
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 120px 0;
+}
+
+.timelineLine {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  transform: translateX(-50%);
+  background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.1) 10%, rgba(255, 255, 255, 0.1) 90%, transparent);
+}
+
+.skillNodeContainer {
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+  width: 100%;
   position: relative;
-  z-index: 1;
+  margin-bottom: 100px;
 }
 
-.skillBadge {
-  padding: 8px 16px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 8px;
-  font-size: 0.88rem;
-  color: var(--text-muted);
-  transition: all 0.3s;
-  font-weight: 500;
+.skillNodeContainer:last-child {
+  margin-bottom: 0;
 }
 
-.skillBadge:hover {
-  background: rgba(52, 211, 153, 0.1);
-  color: var(--accent-primary);
-  border-color: rgba(52, 211, 153, 0.3);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(52, 211, 153, 0.15);
+.leftNode {
+  justify-content: flex-end;
+  padding-right: 50%;
 }
 
-@media (max-width: 640px) {
-  .grid {
-    grid-template-columns: 1fr;
+.rightNode {
+  justify-content: flex-start;
+  padding-left: 50%;
+}
+
+.timelineCenterDot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  margin-left: -8px;
+  margin-top: -8px;
+  z-index: 10;
+}
+
+.cardWrapperLeft {
+  margin-right: 80px;
+  perspective: 1000px;
+}
+
+.cardWrapperRight {
+  margin-left: 80px;
+  perspective: 1000px;
+}
+
+.skillNodeCard {
+  background: var(--card-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  padding: 20px 32px;
+  border-radius: 16px;
+  border: 1px solid var(--glass-border);
+  min-width: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+  cursor: crosshair;
+  position: relative;
+  transition: border-color 0.3s;
+}
+
+.leftNode .skillNodeCard {
+  margin-right: 0;
+}
+
+.rightNode .skillNodeCard {
+  margin-left: 0;
+}
+
+.skillNodeText {
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+/* CV Target Box Corners for hover */
+.cvCornerTl, .cvCornerTr, .cvCornerBl, .cvCornerBr {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-color: transparent;
+  border-style: solid;
+  transition: border-color 0.3s, transform 0.3s;
+  pointer-events: none;
+  z-index: 20;
+}
+.cvCornerTl { top: -2px; left: -2px; border-width: 2px 0 0 2px; border-top-left-radius: 6px; }
+.cvCornerTr { top: -2px; right: -2px; border-width: 2px 2px 0 0; border-top-right-radius: 6px; }
+.cvCornerBl { bottom: -2px; left: -2px; border-width: 0 0 2px 2px; border-bottom-left-radius: 6px; }
+.cvCornerBr { bottom: -2px; right: -2px; border-width: 0 2px 2px 0; border-bottom-right-radius: 6px; }
+
+.skillNodeCard:hover .cvCornerTl,
+.skillNodeCard:hover .cvCornerTr,
+.skillNodeCard:hover .cvCornerBl,
+.skillNodeCard:hover .cvCornerBr {
+  border-color: #ff3366; /* Target locked red */
+}
+
+@media (max-width: 768px) {
+  .leftNode, .rightNode {
+    justify-content: flex-start;
+    padding-left: 60px;
+    padding-right: 0;
+  }
+  
+  .timelineLine {
+    left: 20px;
+  }
+  
+  .timelineCenterDot {
+    left: 20px;
+  }
+  
+  .cardWrapperLeft, .cardWrapperRight {
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
+  }
+  
+  .skillsTimeline {
+    padding-left: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .categoryHeader {
+    padding: 12px 24px;
+  }
+  .categoryTitle {
+    font-size: 1rem;
+  }
+  .skillNodeCard {
+    padding: 16px 20px;
+    min-width: auto;
+  }
+  .skillNodeText {
+    font-size: 1.1rem;
   }
 }
