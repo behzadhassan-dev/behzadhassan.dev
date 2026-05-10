@@ -7,7 +7,7 @@ import styles from './Footer.module.css';
 export default function Footer() {
   const currentYear = new Date().getFullYear();
   const [time, setTime] = useState<string>("");
-  
+
   useEffect(() => {
     const updateTime = () => setTime(new Date().toLocaleTimeString('en-US', { timeZone: 'UTC', hour12: true }) + " UTC");
     updateTime();
@@ -37,7 +37,7 @@ export default function Footer() {
           <div className={`${styles.gridCol} ${styles.brandCol}`}>
             <div className={styles.logoWrap}>
               <span className={styles.logoText}>BEHZAD</span>
-              <span className={styles.logoSuffix}>.HASSAN</span>
+              <span className={styles.logoSuffix}>.</span>
             </div>
             <p className={styles.description}>
               Architecting high-performance AI workstations and computer vision pipelines for the next generation of intelligent systems.
@@ -70,8 +70,8 @@ export default function Footer() {
               ].map((item) => (
                 <a key={item.id} href={`#${item.id}`} className={styles.navLink}>
                   <motion.span
-                    whileTap={{ 
-                      x: [0, -3, 3, -2, 0], 
+                    whileTap={{
+                      x: [0, -3, 3, -2, 0],
                       color: ["#fff", "var(--accent-primary)", "#fff"]
                     }}
                     transition={{ duration: 0.2 }}
@@ -94,17 +94,17 @@ export default function Footer() {
                 { href: 'https://wa.me/923163607160', label: 'WHATSAPP' },
                 { href: 'mailto:behzadhassan967@gmail.com', label: 'EMAIL' },
               ].map((item) => (
-                <a 
-                  key={item.label} 
-                  href={item.href} 
+                <a
+                  key={item.label}
+                  href={item.href}
                   target={item.href.startsWith('http') ? "_blank" : undefined}
-                  rel="noopener noreferrer" 
+                  rel="noopener noreferrer"
                   className={styles.navLink}
                 >
                   <motion.span
-                    whileTap={{ 
-                      scale: 0.95, 
-                      x: [0, -4, 4, 0], 
+                    whileTap={{
+                      scale: 0.95,
+                      x: [0, -4, 4, 0],
                       color: ["#fff", "var(--accent-secondary)", "#fff"]
                     }}
                     className={styles.linkText}
